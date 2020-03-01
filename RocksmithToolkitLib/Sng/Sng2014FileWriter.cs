@@ -149,7 +149,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
             public int Medium { get; private set; }
             public int Hard { get; private set; }
 
-            // Number of ignored notes and chords at hard difficulty level
+            // Number of ignored notes and chords at max difficulty level
             public int Ignored { get; set; }
 
             public void Increment(int level)
@@ -172,18 +172,16 @@ namespace RocksmithToolkitLib.Sng2014HSL
                 var arr = sng.Arrangements.Arrangements[i];
                 foreach (var note in arr.Notes.Notes)
                 {
-                    for (int level = 0; level < 3; level++)
+                    var phraseIteration = sng.PhraseIterations.PhraseIterations[note.PhraseIterationId];
+                    for (int heroLevel = 0; heroLevel < 3; heroLevel++)
                     {
-                        if (i != sng.PhraseIterations.PhraseIterations[note.PhraseIterationId].Difficulty[level])
-                        {
-                            // This note is above or below requested level
+                        if (i != phraseIteration.Difficulty[heroLevel])
                             continue;
-                        }
 
-                        if (level == 2 && (note.NoteMask & CON.NOTE_MASK_IGNORE) != 0)
+                        if (heroLevel == 2 && (note.NoteMask & CON.NOTE_MASK_IGNORE) != 0)
                             noteCounts.Ignored++;
 
-                        noteCounts.Increment(level);
+                        noteCounts.Increment(heroLevel);
                     }
                 }
             }
