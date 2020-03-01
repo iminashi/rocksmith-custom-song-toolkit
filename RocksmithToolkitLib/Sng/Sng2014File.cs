@@ -37,8 +37,6 @@ namespace RocksmithToolkitLib.Sng2014HSL
             var parser = new Sng2014FileWriter();
             var sng = new Sng2014File();
             parser.ReadSong(song, sng);
-            sng.NoteCount = parser.NoteCount;
-            sng.DNACount = parser.DNACount;
             return sng;
         }
 

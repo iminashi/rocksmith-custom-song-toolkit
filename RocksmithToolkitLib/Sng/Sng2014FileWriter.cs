@@ -143,68 +143,65 @@ namespace RocksmithToolkitLib.Sng2014HSL
             return max;
         }
 
-        // Easy, Medium, Hard = 0, 1, 2
-        public int[] NoteCount { get; set; }
-
-        // Number of ignored notes and chords when at max difficulty
-        private int IgnoreCount;
-
-        private int getNoteCount(Sng2014File sng, int Level)
+        private class NoteCounts
         {
-            // time => note count
-            var notes = new Dictionary<float, int>();
-            var level = new Dictionary<float, int>();
+            public int Easy { get; private set; }
+            public int Medium { get; private set; }
+            public int Hard { get; private set; }
 
-            for (int i = sng.Arrangements.Count - 1; i >= 0; i--)
+            // Number of ignored notes and chords at hard difficulty level
+            public int Ignored { get; set; }
+
+            public void Increment(int level)
             {
-                var a = sng.Arrangements.Arrangements[i];
-                foreach (var n in a.Notes.Notes)
+                switch(level)
                 {
-                    if (i != sng.PhraseIterations.PhraseIterations[n.PhraseIterationId].Difficulty[Level])
-                        // This note is above or below requested level
-                        continue;
+                    case 0: Easy++; break;
+                    case 1: Medium++; break;
+                    case 2: Hard++; break;
+                }
+            }
+        }
 
-                    if (!notes.ContainsKey(n.Time))
+        private NoteCounts CountNotes(Sng2014File sng)
+        {
+            NoteCounts noteCounts = new NoteCounts();
+
+            for (int i = 0; i < sng.Arrangements.Count; i++)
+            {
+                var arr = sng.Arrangements.Arrangements[i];
+                foreach (var note in arr.Notes.Notes)
+                {
+                    for (int level = 0; level < 3; level++)
                     {
-                        if (Level == 2 && (n.NoteMask & CON.NOTE_MASK_IGNORE) != 0)
-                            IgnoreCount++;
+                        if (i != sng.PhraseIterations.PhraseIterations[note.PhraseIterationId].Difficulty[level])
+                        {
+                            // This note is above or below requested level
+                            continue;
+                        }
 
-                        // 1 note at difficulty i
-                        notes[n.Time] = 1;
-                        level[n.Time] = i;
-                    }
-                    else if (i == level[n.Time])
-                    {
-                        if (Level == 2 && (n.NoteMask & CON.NOTE_MASK_IGNORE) != 0)
-                            IgnoreCount++;
+                        if (level == 2 && (note.NoteMask & CON.NOTE_MASK_IGNORE) != 0)
+                            noteCounts.Ignored++;
 
-                        // we can add notes while still in the same difficulty
-                        notes[n.Time] += 1;
+                        noteCounts.Increment(level);
                     }
                 }
             }
 
-            int count = 0;
-            foreach (var time_count in notes.Values)
-                count += time_count;
-            return count;
+            return noteCounts;
         }
 
         private void parseMetadata(Song2014 xml, Sng2014File sng, Int16[] tuning)
         {
-            // Easy, Medium, Hard
-            NoteCount = new int[3];
-            NoteCount[0] = getNoteCount(sng, 0);
-            NoteCount[1] = getNoteCount(sng, 1);
-            IgnoreCount = 0;
-            NoteCount[2] = getNoteCount(sng, 2); // Calculates IgnoreCount
+            var noteCounts = CountNotes(sng);
+            sng.NoteCount = new[] { noteCounts.Easy, noteCounts.Medium, noteCounts.Hard };
 
             sng.Metadata = new Metadata();
             sng.Metadata.MaxScore = 100000;
 
             sng.Metadata.MaxDifficulty = getMaxDifficulty(xml);
-            sng.Metadata.MaxNotesAndChords = NoteCount[2];
-            sng.Metadata.MaxNotesAndChords_Real = sng.Metadata.MaxNotesAndChords - IgnoreCount; //num "unique notes - ignored"
+            sng.Metadata.MaxNotesAndChords = noteCounts.Hard;
+            sng.Metadata.MaxNotesAndChords_Real = noteCounts.Hard - noteCounts.Ignored; //num "unique notes - ignored"
             sng.Metadata.PointsPerNote = sng.Metadata.MaxScore / sng.Metadata.MaxNotesAndChords;
 
             sng.Metadata.FirstBeatLength = xml.Ebeats[1].Time - xml.Ebeats[0].Time;
@@ -605,6 +602,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
 
             sng.DNAs.Dnas = dnas.ToArray();
             sng.DNAs.Count = sng.DNAs.Dnas.Length;
+            sng.DNACount = DNACount;
         }
 
         private void parseSections(Song2014 xml, Sng2014File sng)
