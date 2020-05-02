@@ -110,10 +110,10 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
             DLC = true; // false = requires UPlay to unlock
 
             // TODO: monitor this change
-            if (info.ToolkitInfo == null || info.ToolkitInfo.PackageAuthor == "Ubisoft")
+            //if (info.ToolkitInfo == null || info.ToolkitInfo.PackageAuthor == "Ubisoft")
                 SKU = "RS2"; // shows purple marker w/ "DLC" text overlay
-            else
-                SKU = ""; // hides album artwork marker in-game setlist
+            //else
+            //    SKU = "RS2"; // hides album artwork marker in-game setlist
 
             // this SKU and DLCKey combination shows black marker w/ "RS1" text overlay on album artwork in-game setlist
             // SKU = "RS1";
