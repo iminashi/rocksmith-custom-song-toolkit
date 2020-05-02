@@ -2118,6 +2118,11 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             return info;
         }
 
+        public void OpenTemplate()
+        {
+            btnTemplateLoad_Click(null, null);
+        }
+
         private void btnTemplateLoad_Click(object sender, EventArgs e)
         {
             //TODO: issue with gameversion

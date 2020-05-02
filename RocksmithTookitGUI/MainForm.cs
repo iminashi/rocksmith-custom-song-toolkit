@@ -131,15 +131,15 @@ namespace RocksmithToolkitGUI
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
             // hidden easter eggs ... commented out bad practice
-            //if (!e.Control || !e.Shift) return;
-            //switch (e.KeyCode)
-            //{
-            //    case Keys.O: //<< Load Template
-            //        dlcPackageCreator1.btnTemplateLoad_Click();
-            //        break;
-            //    case Keys.S: //<< Save Template
-            //        dlcPackageCreator1.SaveTemplateFile();
-            //        break;
+            if (!e.Control) return;
+            switch (e.KeyCode)
+            {
+                case Keys.O: //<< Load Template
+                    dlcPackageCreator1.OpenTemplate();
+                    break;
+                case Keys.S: //<< Save Template
+                    dlcPackageCreator1.SaveTemplateFile();
+                    break;
             //    case Keys.I: //<< Import Package
             //        dlcPackageCreator1.btnPackageImport_Click();
             //        break;
@@ -152,7 +152,7 @@ namespace RocksmithToolkitGUI
             //    case Keys.T: //<< Add Tone
             //        dlcPackageCreator1.btnToneAdd_Click();
             //        break;
-            //}
+            }
         }
 
         private void restartToolStripMenuItem_Click(object sender, EventArgs e)
