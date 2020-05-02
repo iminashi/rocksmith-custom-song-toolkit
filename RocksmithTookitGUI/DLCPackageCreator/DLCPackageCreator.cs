@@ -2533,8 +2533,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
         private void btnArrangementQuick_Click(object sender, EventArgs e)
         {
-            // use new Custom TreeViewOfd to keep arrangements in correct selected order
-            using (var ofd = new TreeViewOfd())
+            using (var ofd = new OpenFileDialog())
             {
                 ofd.InitialDirectory = GlobalsConfig.DefaultProjectFolder;
                 ofd.Title = "Multiselect XML Arrangements and Arrange Order ...";
@@ -2548,8 +2547,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 GlobalsConfig.DefaultProjectFolder = ofd.InitialDirectory;
                 ConfigRepository.Instance()["creator_defaultproject"] = ofd.InitialDirectory;
 
-                List<string> xmlFilePaths = ofd.FileNames;
-                AddArrangementsQuick(xmlFilePaths.ToArray());
+                AddArrangementsQuick(ofd.FileNames);
             }
         }
 
