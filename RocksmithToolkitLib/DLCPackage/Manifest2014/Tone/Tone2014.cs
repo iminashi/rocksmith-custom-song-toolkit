@@ -145,7 +145,28 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Tone
                 using (var br = new StreamReader(outMS))
                 {
                     RijndaelEncryptor.DecryptProfile(input, outMS);
-                    JToken token = JObject.Parse(br.ReadToEnd());
+                    string toneArrayJson = string.Empty;
+
+                    while (!br.EndOfStream)
+                    {
+                        string read = br.ReadLine();
+                        if (read.StartsWith("\"CustomTones"))
+                        {
+                            var sb = new StringBuilder("{");
+                            do
+                            {
+                                sb.Append(read);
+                                read = br.ReadLine();
+                            }
+                            while (!read.Contains("]"));
+                            sb.Append("]}");
+
+                            toneArrayJson = sb.ToString();
+                            break;
+                        }
+                    }
+
+                    JToken token = JObject.Parse(toneArrayJson);
                     foreach (var toon in token.SelectToken("CustomTones"))
                         tones.Add(toon.ToObject<Tone2014>());
                 }
