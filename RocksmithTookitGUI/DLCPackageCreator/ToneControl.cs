@@ -6,6 +6,7 @@ using RocksmithToolkitLib.DLCPackage.Manifest2014.Tone;
 using RocksmithToolkitLib.Extensions;
 using RocksmithToolkitLib.ToolkitTone;
 using RocksmithToolkitLib.DLCPackage.Manifest.Tone;
+using System.Collections.Generic;
 
 namespace RocksmithToolkitGUI.DLCPackageCreator
 {
@@ -96,7 +97,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 // TODO: multiple ToneDescriptors improved handling and editing
                 if (tone.ToneDescriptors.Count > 0)
                 {
-                    var descriptors = ToneDescriptor.List().ToList();
+                    var descriptors = ToneDescriptor.AllDescriptors;
                     int firstIndex = 0;
                     if (tone.ToneDescriptors.Count > 1)
                     {
@@ -146,12 +147,12 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             // TONE DESCRIPTOR
             if (CurrentGameVersion == GameVersion.RS2014)
             {
-                var tonedesclist = ToneDescriptor.List().ToList();
+                var tonedesclist = ToneDescriptor.AllDescriptors;
                 descriptorCombo1.DisplayMember = "Name";
                 descriptorCombo1.ValueMember = "Descriptor";
                 descriptorCombo1.DataSource = tonedesclist;
 
-                var toneDescList2 = ToneDescriptor.List().ToList();
+                var toneDescList2 = new List<ToneDescriptor>(ToneDescriptor.AllDescriptors);
                 toneDescList2.Insert(0, new ToneDescriptor
                 {
                     Name = string.Empty,
