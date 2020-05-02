@@ -17,7 +17,6 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Tone
         {
             yield return new ToneDescriptor { Name = "BASS", ShortName = "bass", Descriptor = "$[35715]BASS" };
             yield return new ToneDescriptor { Name = "OVERDRIVE", ShortName = "od", Descriptor = "$[35716]OVERDRIVE" };
-            //yield return new ToneDescriptor { Name = "VOCAL", ShortName = "vocal", Descriptor = "$[35718]VOCAL" };
             yield return new ToneDescriptor { Name = "OCTAVE", ShortName = "8va", Descriptor = "$[35719]OCTAVE" };
             yield return new ToneDescriptor { Name = "CLEAN", ShortName = "clean", Descriptor = "$[35720]CLEAN" };
             yield return new ToneDescriptor { Name = "ACOUSTIC", ShortName = "acoustic", Descriptor = "$[35721]ACOUSTIC" };
@@ -39,6 +38,20 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Tone
             yield return new ToneDescriptor { Name = "ECHO", ShortName = "echo", Descriptor = "$[35754]ECHO" };
             yield return new ToneDescriptor { Name = "HIGH_GAIN", ShortName = "high", Descriptor = "$[35755]HIGH GAIN" };
             yield return new ToneDescriptor { Name = "FUZZ", ShortName = "fuzz", Descriptor = "$[35756]FUZZ" };
+
+            yield return new ToneDescriptor { Name = "* Vocal", ShortName = "vocal", Descriptor = "$[35718]VOCAL" };
+            yield return new ToneDescriptor { Name = "* Direct", ShortName = "direct", Descriptor = "$[35752]DIRECT" };
+            yield return new ToneDescriptor { Name = "* Effect", ShortName = "effect", Descriptor = "$[35733]EFFECT" };
+            yield return new ToneDescriptor { Name = "** Crunch", ShortName = "crunch", Descriptor = "$[27156]CRUNCH" };
+
+            yield return new ToneDescriptor { Name = "** Slap Bass", ShortName = "slap", Descriptor = "$[27151]SLAP_BASS" };
+
+            yield return new ToneDescriptor { Name = "** Emulated", ShortName = "emu", Descriptor = "$[27119]EMULATED" };
+
+            yield return new ToneDescriptor { Name = "** Banjo", ShortName = "banjo", Descriptor = "$[27201]BANJO" };
+            yield return new ToneDescriptor { Name = "** Mandolin", ShortName = "mandolin", Descriptor = "$[27202]MANDOLIN" };
+            yield return new ToneDescriptor { Name = "** Ukulele", ShortName = "uke", Descriptor = "$[27204]UKULELE" };
+            yield return new ToneDescriptor { Name = "** Piano", ShortName = "piano", Descriptor = "$[29495]PIANO" };
         }
     }
 }
