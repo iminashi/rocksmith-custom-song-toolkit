@@ -374,7 +374,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             {
                 //return new Tone2014() { Name = name, Key = name };
                 var tone2014 = new Tone2014();
-                tone2014.Name = name.GetValidAtaSpaceName();
+                tone2014.Name = name.GetValidToneName();
                 tone2014.Key = name.GetValidKey(isTone: true);
                 tone2014.GearList.Amp = allPedals.First(p => p.Key == "Amp_OrangeAD50").MakePedalSetting(GameVersion.RS2014);
                 tone2014.GearList.Cabinet = allPedals.First(p => p.Key == "Cab_OrangeJimmyBean_57_Cone").MakePedalSetting(GameVersion.RS2014);
@@ -384,7 +384,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
             // return new Tone { Name = name, Key = name };
             var tone = new Tone();
-            tone.Name = name.GetValidAtaSpaceName();
+            tone.Name = name.GetValidToneName();
             tone.Key = name.GetValidKey(isTone: true);
             tone.PedalList.Add("Amp", allPedals.First(p => p.Key == "Amp_Fusion").MakePedalSetting(GameVersion.RS2012));
             tone.PedalList.Add("Cabinet", allPedals.First(p => p.Key == "Cab_2X12_Fusion_57_Cone").MakePedalSetting(GameVersion.RS2012));

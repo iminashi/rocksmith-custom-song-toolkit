@@ -123,6 +123,12 @@ namespace RocksmithToolkitLib.Extensions
             return value.Filter(c => usableCharSet.IndexOf(c) >= 0);
         }
 
+        public static string GetValidToneName(this string value)
+        {
+            Regex rgx = new Regex("[^a-zA-Z0-9_]");
+            return rgx.Replace(value, "");
+        }
+
         public static string GetValidFileName(this string fileName)
         {
             fileName = fileName.Replace(",", ""); // remove commas even though valid

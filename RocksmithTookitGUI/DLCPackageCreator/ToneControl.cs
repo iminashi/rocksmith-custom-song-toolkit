@@ -132,12 +132,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             // NAME
             toneNameBox.TextChanged += (sender, e) =>
             {
-                var toneName = toneNameBox.Text;
-                toneName = toneName.GetValidAtaSpaceName();
-                // tone key has no spaces or special characters
-                // tone.Key = toneName.GetValidKey(isTone: true); 
-                tone.Name = toneName; // may contain spaces
-                toneNameBox.Text = toneName;
+                var toneName = toneNameBox.Text.GetValidToneName();
+                toneNameBox.Text = tone.Name = toneName;
             };
 
             // VOLUME
@@ -324,7 +320,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         {
             // final validation check and set tone.Name and tone.Key
             var toneName = toneNameBox.Text;
-            toneName = toneName.GetValidAtaSpaceName();
+            toneName = toneName.GetValidToneName();
             // tone key has no spaces or special characters
             tone.Key = toneName.GetValidKey(isTone: true); 
             tone.Name = toneName; // may contain spaces

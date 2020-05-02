@@ -518,7 +518,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 // apply consistent tone name/key naming throughout to minimize tone issues
                 foreach (var tone in data.Tones)
                 {
-                    tone.Name = tone.Name.GetValidAtaSpaceName();
+                    tone.Name = tone.Name.GetValidToneName();
                     tone.Key = tone.Name.GetValidKey(isTone: true);
                 }
             }
