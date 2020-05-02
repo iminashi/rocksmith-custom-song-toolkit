@@ -334,25 +334,9 @@ namespace RocksmithToolkitLib.XML
             var sameComment = false;
             var sameVersion = false;
 
-            // preserve utf8 and html ampersand encoding in jvocals
-            //if (xmlSongFile.ToLower().Contains("jvocals"))
-            //{
-            //    var xmlContent = File.ReadAllText(xmlSongFile).Replace("&#", "&amp;#");
-            //    File.WriteAllText(xmlSongFile, xmlContent);
-            //}
-
             var xml = XDocument.Load(xmlSongFile);
-
-            var rootElement = "song";
-            if (Path.GetFileName(xmlSongFile).ToLower().Contains("vocals"))
-                rootElement = "vocals";
-            else if (Path.GetFileName(xmlSongFile).ToLower().Contains("showlights"))
-                rootElement = "showlights";
-
-            var rootnode = xml.Element(rootElement);
-            if (rootnode == null)
-                throw new InvalidDataException(xmlSongFile + Environment.NewLine +
-                    "XML file does not contain required root node.");
+            var rootnode = xml.Root;
+            var rootElement = rootnode.Name.LocalName;
 
             // remove all xml comments
             xml.DescendantNodes().OfType<XComment>().Remove();
@@ -445,13 +429,6 @@ namespace RocksmithToolkitLib.XML
 
             // xml.Declaration = new XDeclaration("1.0", "utf-8", null);
             xml.Save(xmlSongFile);
-
-            // preserve html ampersands encoding in jvocals
-            //if (xmlSongFile.ToLower().Contains("jvocals"))
-            //{
-            //    var xmlContent = File.ReadAllText(xmlSongFile).Replace("&amp;#", "&#");
-            //    File.WriteAllText(xmlSongFile, xmlContent);
-            //}
         }
 
         public static Song2014 LoadFromFile(string xmlSongRS2014File)
