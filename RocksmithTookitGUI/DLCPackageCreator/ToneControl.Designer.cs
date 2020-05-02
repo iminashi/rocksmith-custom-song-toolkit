@@ -64,7 +64,8 @@
             this.gbPostPedal = new System.Windows.Forms.GroupBox();
             this.gbToneInformation = new System.Windows.Forms.GroupBox();
             this.descriptorLabel = new System.Windows.Forms.Label();
-            this.descriptorCombo = new System.Windows.Forms.ComboBox();
+            this.descriptorCombo1 = new System.Windows.Forms.ComboBox();
+            this.descriptorCombo2 = new System.Windows.Forms.ComboBox();
             this.toneNameBox = new RocksmithToolkitGUI.CueTextBox();
             this.volumeBox = new RocksmithToolkitGUI.DLCPackageCreator.NumericUpDownFixed();
             this.gbAmpCab.SuspendLayout();
@@ -432,8 +433,9 @@
             // 
             // gbToneInformation
             // 
+            this.gbToneInformation.Controls.Add(this.descriptorCombo2);
             this.gbToneInformation.Controls.Add(this.descriptorLabel);
-            this.gbToneInformation.Controls.Add(this.descriptorCombo);
+            this.gbToneInformation.Controls.Add(this.descriptorCombo1);
             this.gbToneInformation.Controls.Add(this.toneNameBox);
             this.gbToneInformation.Controls.Add(this.volumeBox);
             this.gbToneInformation.Controls.Add(this.label4);
@@ -450,21 +452,31 @@
             // 
             this.descriptorLabel.AutoSize = true;
             this.descriptorLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.descriptorLabel.Location = new System.Drawing.Point(6, 51);
+            this.descriptorLabel.Location = new System.Drawing.Point(3, 51);
             this.descriptorLabel.Name = "descriptorLabel";
-            this.descriptorLabel.Size = new System.Drawing.Size(62, 13);
+            this.descriptorLabel.Size = new System.Drawing.Size(63, 13);
             this.descriptorLabel.TabIndex = 7;
-            this.descriptorLabel.Text = "Tone Type:";
+            this.descriptorLabel.Text = "Description:";
             // 
-            // descriptorCombo
+            // descriptorCombo1
             // 
-            this.descriptorCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.descriptorCombo.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.descriptorCombo.FormattingEnabled = true;
-            this.descriptorCombo.Location = new System.Drawing.Point(96, 46);
-            this.descriptorCombo.Name = "descriptorCombo";
-            this.descriptorCombo.Size = new System.Drawing.Size(147, 21);
-            this.descriptorCombo.TabIndex = 2;
+            this.descriptorCombo1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.descriptorCombo1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.descriptorCombo1.FormattingEnabled = true;
+            this.descriptorCombo1.Location = new System.Drawing.Point(158, 46);
+            this.descriptorCombo1.Name = "descriptorCombo1";
+            this.descriptorCombo1.Size = new System.Drawing.Size(85, 21);
+            this.descriptorCombo1.TabIndex = 2;
+            // 
+            // descriptorCombo2
+            // 
+            this.descriptorCombo2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.descriptorCombo2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.descriptorCombo2.FormattingEnabled = true;
+            this.descriptorCombo2.Location = new System.Drawing.Point(64, 46);
+            this.descriptorCombo2.Name = "descriptorCombo2";
+            this.descriptorCombo2.Size = new System.Drawing.Size(85, 21);
+            this.descriptorCombo2.TabIndex = 8;
             // 
             // toneNameBox
             // 
@@ -564,7 +576,8 @@
         private System.Windows.Forms.Button prePedal4KnobButton;
         private System.Windows.Forms.GroupBox gbPostPedal;
         private System.Windows.Forms.GroupBox gbToneInformation;
-        private System.Windows.Forms.ComboBox descriptorCombo;
+        private System.Windows.Forms.ComboBox descriptorCombo1;
         private System.Windows.Forms.Label descriptorLabel;
+        private System.Windows.Forms.ComboBox descriptorCombo2;
     }
 }

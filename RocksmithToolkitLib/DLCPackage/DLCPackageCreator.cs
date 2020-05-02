@@ -532,7 +532,6 @@ namespace RocksmithToolkitLib.DLCPackage
                         var arrangementFileName = songPartition.GetArrangementFileName(arr.ArrangementName, arr.ArrangementType).ToLower();
 
                         // GAME SONG (SNG)
-                        UpdateToneDescriptors(info);
                         GenerateSNG(arr, platform); // RS2014
                         var sngSongFile = File.OpenRead(arr.SongFile.File);
                         arrangementStream.Add(sngSongFile);
@@ -1160,24 +1159,6 @@ namespace RocksmithToolkitLib.DLCPackage
             writer.Write(appId ?? defaultAppId);
             writer.Flush();
             output.Seek(0, SeekOrigin.Begin);
-        }
-
-        public static void UpdateToneDescriptors(DLCPackageData info)
-        {
-            foreach (var tone in info.TonesRS2014)
-            {
-                if (tone == null) continue;
-                string DescName = tone.Name.Split('_').Last();
-                foreach (var td in ToneDescriptor.List())
-                {
-                    if (td.ShortName != DescName)
-                        continue;
-
-                    tone.ToneDescriptors.Clear();
-                    tone.ToneDescriptors.Add(td.Descriptor);
-                    break;
-                }
-            }
         }
 
         public static void GenerateSNG(Arrangement arr, Platform platform)

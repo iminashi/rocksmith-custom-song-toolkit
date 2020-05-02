@@ -221,8 +221,7 @@ namespace RocksmithToolkitLib.Extensions
             string validAlphaNumerics = "a-zA-Z0-9";
 
             Regex rgx = new Regex("[^" + validAlphaNumerics + validSpecialCharacters + "]*");
-            value = rgx.Replace(value, "");
-            return value;
+            return rgx.Replace(value, "");
         }
 
         public static string GetValidPathName(this string pathName)

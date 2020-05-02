@@ -54,7 +54,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             InitializeComboBoxes();
 
             descriptorLabel.Enabled = CurrentGameVersion == GameVersion.RS2014;
-            descriptorCombo.Enabled = CurrentGameVersion == GameVersion.RS2014;
+            descriptorCombo1.Enabled = CurrentGameVersion == GameVersion.RS2014;
+            descriptorCombo2.Enabled = CurrentGameVersion == GameVersion.RS2014;
             gbLoopPedalAndRacks.Text = (CurrentGameVersion == GameVersion.RS2012) ? "Loop Pedal" : "Rack";
             gbPostPedal.Text = (CurrentGameVersion == GameVersion.RS2012) ? "Post Pedal" : "Loop Pedal";
             loopPedalRack4Box.Enabled = CurrentGameVersion == GameVersion.RS2014;
@@ -95,11 +96,19 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 // TODO: multiple ToneDescriptors improved handling and editing
                 if (tone.ToneDescriptors.Count > 0)
                 {
-                    if (ToneDescriptor.List().Any<ToneDescriptor>(t => t.Descriptor == tone.ToneDescriptors[0]))
-                        descriptorCombo.SelectedIndex = ToneDescriptor.List().TakeWhile(t => t.Descriptor != tone.ToneDescriptors[0]).Count();
+                    var descriptors = ToneDescriptor.List().ToList();
+                    int firstIndex = 0;
+                    if (tone.ToneDescriptors.Count > 1)
+                    {
+                        int? desc2Index = descriptors.IndexOf(t => t.Descriptor == tone.ToneDescriptors[0]);
+                        if (desc2Index.HasValue)
+                            descriptorCombo2.SelectedIndex = desc2Index.Value + 1; // + 1 for the empty slot
+                        firstIndex = 1;
+                    }
+                    int? desc1Index = descriptors.IndexOf(t => t.Descriptor == tone.ToneDescriptors[firstIndex]);
+                    if (desc1Index.HasValue)
+                        descriptorCombo1.SelectedIndex = desc1Index.Value;
                 }
-                else
-                    UpdateToneDescription(descriptorCombo);
             }
         }
 
@@ -142,12 +151,21 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             if (CurrentGameVersion == GameVersion.RS2014)
             {
                 var tonedesclist = ToneDescriptor.List().ToList();
-                descriptorCombo.DisplayMember = "Name";
-                descriptorCombo.ValueMember = "Descriptor";
-                descriptorCombo.DataSource = tonedesclist;
+                descriptorCombo1.DisplayMember = "Name";
+                descriptorCombo1.ValueMember = "Descriptor";
+                descriptorCombo1.DataSource = tonedesclist;
 
-                descriptorCombo.SelectedValueChanged += (sender, e) =>
-                    UpdateToneDescription((ComboBox)sender);
+                var toneDescList2 = ToneDescriptor.List().ToList();
+                toneDescList2.Insert(0, new ToneDescriptor
+                {
+                    Name = string.Empty,
+                    Descriptor = string.Empty,
+                    ShortName = string.Empty
+                });
+
+                descriptorCombo2.DisplayMember = "Name";
+                descriptorCombo2.ValueMember = "Descriptor";
+                descriptorCombo2.DataSource = toneDescList2;
             }
         }
 
@@ -160,13 +178,16 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             tvt.SetToolTip(volumeBox, "0.0 Soft, -20.0 (Default), -30.0 Loud");
         }
 
-        private void UpdateToneDescription(ComboBox combo)
+        public void UpdateToneDescription()
         {
             if (_refreshingCombos)
                 return;
 
-            var descriptor = combo.SelectedItem as ToneDescriptor;
             tone.ToneDescriptors.Clear();
+            var descriptor = descriptorCombo2.SelectedItem as ToneDescriptor;
+            if (!string.IsNullOrEmpty(descriptor.Name))
+                tone.ToneDescriptors.Add(descriptor.Descriptor);
+            descriptor = descriptorCombo1.SelectedItem as ToneDescriptor;
             tone.ToneDescriptors.Add(descriptor.Descriptor);
         }
 
@@ -340,8 +361,6 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 tt.Show("", this, 20000); // show for 20 seconds
             }
         }
-
-
     }
 }
 

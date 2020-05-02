@@ -34,6 +34,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
         public ToneForm()
         {
             InitializeComponent();
+
+            FormClosing += (s, e) => toneControl.UpdateToneDescription();
         }
 
         private void okButton_Click(object sender, EventArgs e)
