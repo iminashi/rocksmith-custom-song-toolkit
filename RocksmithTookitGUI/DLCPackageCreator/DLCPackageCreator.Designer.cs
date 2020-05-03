@@ -95,6 +95,7 @@
             this.pbUpdateProgress = new System.Windows.Forms.ProgressBar();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnDevUse = new System.Windows.Forms.Button();
+            this.btnToneProfile = new System.Windows.Forms.Button();
             this.gbPlatform.SuspendLayout();
             this.gbFiles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioQuality)).BeginInit();
@@ -169,7 +170,7 @@
             this.lstArrangements.Size = new System.Drawing.Size(389, 69);
             this.lstArrangements.TabIndex = 0;
             this.toolTip.SetToolTip(this.lstArrangements, "Select (highlight) an arrangement then\r\nuse Shift+Up/Down Arrow to change\r\nthe or" +
-                    "der of the Arrangements list.");
+        "der of the Arrangements list.");
             this.lstArrangements.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ListBox_KeyDown);
             this.lstArrangements.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstArrangement_MouseDoubleClick);
             // 
@@ -240,7 +241,7 @@
             this.lstTones.Size = new System.Drawing.Size(389, 82);
             this.lstTones.TabIndex = 0;
             this.toolTip.SetToolTip(this.lstTones, "Select (highlight) a tone and then \r\nuse Shift+Up/Down Arrow to change\r\nthe order" +
-                    " of the Tones list.");
+        " of the Tones list.");
             this.lstTones.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ListBox_KeyDown);
             this.lstTones.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstTone_MouseDoubleClick);
             // 
@@ -422,7 +423,7 @@
             this.label2.Size = new System.Drawing.Size(424, 13);
             this.label2.TabIndex = 6;
             this.label2.Text = "Song preview is generated automatically if not provided in format \'filename_previ" +
-                "ew.wem\'\r\n";
+    "ew.wem\'\r\n";
             // 
             // txtAlbumArtPath
             // 
@@ -478,6 +479,7 @@
             // 
             // gbTones
             // 
+            this.gbTones.Controls.Add(this.btnToneProfile);
             this.gbTones.Controls.Add(this.btnToneDuplicate);
             this.gbTones.Controls.Add(this.label1);
             this.gbTones.Controls.Add(this.lstTones);
@@ -511,10 +513,9 @@
             this.label1.ForeColor = System.Drawing.Color.MediumSlateBlue;
             this.label1.Location = new System.Drawing.Point(2, 106);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(495, 13);
+            this.label1.Size = new System.Drawing.Size(250, 13);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Use \"Up/Down\" keys to change order of the tones, use \"Delete\" to delete and \"D\" t" +
-                "o duplicate a tone.";
+            this.label1.Text = "Use \"Delete\" to delete and \"D\" to duplicate a tone.";
             // 
             // gbArrangements
             // 
@@ -643,8 +644,8 @@
             this.txtDlcKey.TabIndex = 3;
             this.txtDlcKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.toolTip.SetToolTip(this.txtDlcKey, "DLC Key (aka Song Key):\nA unique humanly readable song key.\nNo spaces or special " +
-                    "characters allowed.\n\nUse the Configuration menu to \nsave your Charter Name so th" +
-                    "at \nDLC Key is auto formatted properly.");
+        "characters allowed.\n\nUse the Configuration menu to \nsave your Charter Name so th" +
+        "at \nDLC Key is auto formatted properly.");
             // 
             // txtAlbumSort
             // 
@@ -987,10 +988,22 @@
             this.btnDevUse.TabIndex = 8;
             this.btnDevUse.Text = "DEV";
             this.toolTip.SetToolTip(this.btnDevUse, "Developer User Only - For Debugging\r\nUse to load a folder containing song artifac" +
-                    "ts\r\n(a previously unpacked CDLC archive)");
+        "ts\r\n(a previously unpacked CDLC archive)");
             this.btnDevUse.UseVisualStyleBackColor = false;
             this.btnDevUse.Visible = false;
             this.btnDevUse.Click += new System.EventHandler(this.btnDevUse_Click);
+            // 
+            // btnToneProfile
+            // 
+            this.btnToneProfile.ForeColor = System.Drawing.Color.IndianRed;
+            this.btnToneProfile.Location = new System.Drawing.Point(416, 96);
+            this.btnToneProfile.Name = "btnToneProfile";
+            this.btnToneProfile.Size = new System.Drawing.Size(58, 23);
+            this.btnToneProfile.TabIndex = 7;
+            this.btnToneProfile.Text = "Profile";
+            this.toolTip.SetToolTip(this.btnToneProfile, "Import tone from profile");
+            this.btnToneProfile.UseVisualStyleBackColor = true;
+            this.btnToneProfile.Click += new System.EventHandler(this.btnToneProfile_Click);
             // 
             // DLCPackageCreator
             // 
@@ -1097,5 +1110,6 @@
         private System.Windows.Forms.Label label9;
         public System.Windows.Forms.GroupBox gbFiles;
         public System.Windows.Forms.GroupBox gbSongInformation;
+        private System.Windows.Forms.Button btnToneProfile;
     }
 }

@@ -2940,7 +2940,28 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             txtDlcKey.Clear();
         }
 
+        private void btnToneProfile_Click(object sender, EventArgs e)
+        {
+            string profileFile = ConfigRepository.Instance().GetString("general_rs2014profile");
+            if(string.IsNullOrEmpty(profileFile))
+            {
+                using (var ofd = new OpenFileDialog())
+                {
+                    ofd.Title = "Select Your Profile File";
+                    ofd.Filter = "Rocksmith 2014 Game Save Profile(*_prfldb) | *_prfldb";
+                    if (ofd.ShowDialog() != DialogResult.OK) return;
+                    profileFile = ofd.FileName;
+                    ConfigRepository.Instance()["general_rs2014profile"] = profileFile;
+                }
+            }
 
+            var preToneCount = lstTones.Items.Count;
+            ImportTone(profileFile);
 
+            var numTones = lstTones.Items.Count - preToneCount;
+
+            if (numTones > 0)
+                IsDirty = true;
+        }
     }
 }
