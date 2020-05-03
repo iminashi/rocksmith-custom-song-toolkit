@@ -94,7 +94,6 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
             if (CurrentGameVersion == GameVersion.RS2014)
             {
-                // TODO: multiple ToneDescriptors improved handling and editing
                 if (tone.ToneDescriptors.Count > 0)
                 {
                     var descriptors = ToneDescriptor.AllDescriptors;
@@ -109,6 +108,23 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     int? desc1Index = descriptors.IndexOf(t => t.Descriptor == tone.ToneDescriptors[firstIndex]);
                     if (desc1Index.HasValue)
                         descriptorCombo1.SelectedIndex = desc1Index.Value;
+                }
+                else
+                {
+                    TryToInferToneDescriptor();
+                }
+            }
+        }
+
+        private void TryToInferToneDescriptor()
+        {
+            foreach (var td in ToneDescriptor.AllDescriptors)
+            {
+                if (tone.Name.Contains(td.ShortName))
+                {
+                    tone.ToneDescriptors.Add(td.Descriptor);
+                    descriptorCombo1.SelectedItem = td;
+                    break;
                 }
             }
         }
