@@ -72,7 +72,11 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 if (MessageBox.Show("Please select tone(s) to import." + Environment.NewLine +
                     "Click 'Retry' to continue or 'Cancel' to Abort", MESSAGEBOX_CAPTION,
                         MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
-                    this.DialogResult = DialogResult.Cancel;
+                {
+                    DialogResult = DialogResult.Cancel;
+                    Close();
+                    return;
+                }
             }
             DialogResult = DialogResult.OK;
             Close();
