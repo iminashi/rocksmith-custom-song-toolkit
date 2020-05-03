@@ -2955,13 +2955,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 }
             }
 
-            var preToneCount = lstTones.Items.Count;
             ImportTone(profileFile);
-
-            var numTones = lstTones.Items.Count - preToneCount;
-
-            if (numTones > 0)
-                IsDirty = true;
         }
     }
 }
