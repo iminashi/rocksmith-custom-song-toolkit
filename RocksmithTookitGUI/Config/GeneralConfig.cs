@@ -76,7 +76,7 @@ namespace RocksmithToolkitGUI.Config
         {
             var tb = sender as TextBox;
             if (tb != null)
-                tb.Text = tb.Text.Trim().GetValidSortableName();
+                tb.Text = tb.Text.Trim();
         }
 
         private void LoadAndSetupConfiguration(ControlCollection controls)
