@@ -36,6 +36,9 @@
             // 
             // gbToneList
             // 
+            this.gbToneList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbToneList.Controls.Add(this.btnContinue);
             this.gbToneList.Controls.Add(this.lstToneList);
             this.gbToneList.Location = new System.Drawing.Point(12, 12);
@@ -47,6 +50,7 @@
             // 
             // btnContinue
             // 
+            this.btnContinue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnContinue.BackColor = System.Drawing.Color.LightSteelBlue;
             this.btnContinue.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnContinue.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -60,6 +64,9 @@
             // 
             // lstToneList
             // 
+            this.lstToneList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lstToneList.FormattingEnabled = true;
             this.lstToneList.HorizontalScrollbar = true;
             this.lstToneList.Location = new System.Drawing.Point(13, 20);
@@ -77,12 +84,14 @@
             this.Controls.Add(this.gbToneList);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(349, 261);
             this.Name = "ToneImportForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tone List";
             this.gbToneList.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
 
         #endregion
