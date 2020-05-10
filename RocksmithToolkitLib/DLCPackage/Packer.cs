@@ -262,8 +262,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         }
                         else // SNG => XML
                         {
-                            if (!isODLC)
-                                Song2014.WriteXmlComments(xmlSngFile, xmlComments, customComment: "Generated from SNG file");
+                            Song2014.WriteXmlComments(xmlSngFile, xmlComments, customComment: "Generated from SNG file");
 
                             File.Copy(xmlSngFile, xmlEofFile, true);
                         }
