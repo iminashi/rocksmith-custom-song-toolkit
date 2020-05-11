@@ -100,14 +100,14 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     int firstIndex = 0;
                     if (tone.ToneDescriptors.Count > 1)
                     {
-                        int? desc2Index = descriptors.IndexOf(t => t.Descriptor == tone.ToneDescriptors[0]);
-                        if (desc2Index.HasValue)
-                            descriptorCombo2.SelectedIndex = desc2Index.Value + 1; // + 1 for the empty slot
+                        int desc2Index = descriptors.FindIndex(t => t.Descriptor == tone.ToneDescriptors[0]);
+                        if (desc2Index != -1)
+                            descriptorCombo2.SelectedIndex = desc2Index + 1; // + 1 for the empty slot
                         firstIndex = 1;
                     }
-                    int? desc1Index = descriptors.IndexOf(t => t.Descriptor == tone.ToneDescriptors[firstIndex]);
-                    if (desc1Index.HasValue)
-                        descriptorCombo1.SelectedIndex = desc1Index.Value;
+                    int desc1Index = descriptors.FindIndex(t => t.Descriptor == tone.ToneDescriptors[firstIndex]);
+                    if (desc1Index != -1)
+                        descriptorCombo1.SelectedIndex = desc1Index;
                 }
                 else
                 {
