@@ -13,7 +13,17 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
     public partial class ToneControl : UserControl
     {
         private bool _refreshingCombos = false;
-        public GameVersion CurrentGameVersion;
+
+        private GameVersion _currentGameVersion;
+        public GameVersion CurrentGameVersion
+        {
+            get { return _currentGameVersion; }
+            set
+            {
+                _currentGameVersion = value;
+                LoopOrRackSlot = (value == GameVersion.RS2014) ? "Rack" : "LoopPedal";
+            }
+        }
 
         private dynamic tone;
         public dynamic Tone
@@ -30,17 +40,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             }
         }
 
-        private string loopOrRackSlot;
-        private string LoopOrRackSlot
-        {
-            get
-            {
-                loopOrRackSlot = "LoopPedal";
-                if (CurrentGameVersion == GameVersion.RS2014)
-                    loopOrRackSlot = "Rack";
-                return loopOrRackSlot;
-            }
-        }
+        private string LoopOrRackSlot { get; set; }
 
         public ToneControl()
         {
@@ -193,7 +193,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
         public void UpdateToneDescription()
         {
-            if (_refreshingCombos)
+            if (CurrentGameVersion != GameVersion.RS2014)
                 return;
 
             tone.ToneDescriptors.Clear();
@@ -346,6 +346,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
 
         // prevents multiple tool tip appearance and gives better action
         private ToolTip tt = new ToolTip();
+
         private void toneNameBox_MouseEnter(object sender, EventArgs e)
         {
             tt.ToolTipTitle = "SPECIAL ALERT";
