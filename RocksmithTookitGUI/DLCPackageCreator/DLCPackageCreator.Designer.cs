@@ -60,6 +60,7 @@
             this.numAudioQuality = new RocksmithToolkitGUI.DLCPackageCreator.NumericUpDownFixed();
             this.txtAudioPath = new RocksmithToolkitGUI.CueTextBox();
             this.gbTones = new System.Windows.Forms.GroupBox();
+            this.btnToneProfile = new System.Windows.Forms.Button();
             this.btnToneDuplicate = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.gbArrangements = new System.Windows.Forms.GroupBox();
@@ -95,7 +96,6 @@
             this.pbUpdateProgress = new System.Windows.Forms.ProgressBar();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnDevUse = new System.Windows.Forms.Button();
-            this.btnToneProfile = new System.Windows.Forms.Button();
             this.gbPlatform.SuspendLayout();
             this.gbFiles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioQuality)).BeginInit();
@@ -212,9 +212,9 @@
             // btnToneRemove
             // 
             this.btnToneRemove.ForeColor = System.Drawing.Color.IndianRed;
-            this.btnToneRemove.Location = new System.Drawing.Point(449, 43);
+            this.btnToneRemove.Location = new System.Drawing.Point(447, 43);
             this.btnToneRemove.Name = "btnToneRemove";
-            this.btnToneRemove.Size = new System.Drawing.Size(42, 23);
+            this.btnToneRemove.Size = new System.Drawing.Size(43, 23);
             this.btnToneRemove.TabIndex = 3;
             this.btnToneRemove.Text = "Rmv";
             this.toolTip.SetToolTip(this.btnToneRemove, "Removes the selected tone.");
@@ -226,7 +226,7 @@
             this.btnToneAdd.ForeColor = System.Drawing.Color.IndianRed;
             this.btnToneAdd.Location = new System.Drawing.Point(400, 18);
             this.btnToneAdd.Name = "btnToneAdd";
-            this.btnToneAdd.Size = new System.Drawing.Size(91, 23);
+            this.btnToneAdd.Size = new System.Drawing.Size(90, 23);
             this.btnToneAdd.TabIndex = 1;
             this.btnToneAdd.Text = "Add";
             this.btnToneAdd.UseVisualStyleBackColor = true;
@@ -259,9 +259,9 @@
             // btnToneEdit
             // 
             this.btnToneEdit.ForeColor = System.Drawing.Color.IndianRed;
-            this.btnToneEdit.Location = new System.Drawing.Point(401, 43);
+            this.btnToneEdit.Location = new System.Drawing.Point(400, 43);
             this.btnToneEdit.Name = "btnToneEdit";
-            this.btnToneEdit.Size = new System.Drawing.Size(42, 23);
+            this.btnToneEdit.Size = new System.Drawing.Size(43, 23);
             this.btnToneEdit.TabIndex = 2;
             this.btnToneEdit.Text = "Edit";
             this.btnToneEdit.UseVisualStyleBackColor = true;
@@ -270,9 +270,9 @@
             // btnToneImport
             // 
             this.btnToneImport.ForeColor = System.Drawing.Color.IndianRed;
-            this.btnToneImport.Location = new System.Drawing.Point(449, 68);
+            this.btnToneImport.Location = new System.Drawing.Point(447, 68);
             this.btnToneImport.Name = "btnToneImport";
-            this.btnToneImport.Size = new System.Drawing.Size(42, 23);
+            this.btnToneImport.Size = new System.Drawing.Size(43, 23);
             this.btnToneImport.TabIndex = 5;
             this.btnToneImport.Text = "Imprt";
             this.toolTip.SetToolTip(this.btnToneImport, "Import tone from file");
@@ -370,7 +370,7 @@
             this.gbPlatform.Size = new System.Drawing.Size(229, 41);
             this.gbPlatform.TabIndex = 1;
             this.gbPlatform.TabStop = false;
-            this.gbPlatform.Text = "Platform:";
+            this.gbPlatform.Text = "Platform";
             // 
             // chkPlatformMAC
             // 
@@ -495,12 +495,24 @@
             this.gbTones.TabStop = false;
             this.gbTones.Text = "Tones";
             // 
+            // btnToneProfile
+            // 
+            this.btnToneProfile.ForeColor = System.Drawing.Color.IndianRed;
+            this.btnToneProfile.Location = new System.Drawing.Point(400, 94);
+            this.btnToneProfile.Name = "btnToneProfile";
+            this.btnToneProfile.Size = new System.Drawing.Size(90, 23);
+            this.btnToneProfile.TabIndex = 7;
+            this.btnToneProfile.Text = "From Profile";
+            this.toolTip.SetToolTip(this.btnToneProfile, "Import tone from profile");
+            this.btnToneProfile.UseVisualStyleBackColor = true;
+            this.btnToneProfile.Click += new System.EventHandler(this.btnToneProfile_Click);
+            // 
             // btnToneDuplicate
             // 
             this.btnToneDuplicate.ForeColor = System.Drawing.Color.IndianRed;
-            this.btnToneDuplicate.Location = new System.Drawing.Point(401, 68);
+            this.btnToneDuplicate.Location = new System.Drawing.Point(400, 68);
             this.btnToneDuplicate.Name = "btnToneDuplicate";
-            this.btnToneDuplicate.Size = new System.Drawing.Size(42, 23);
+            this.btnToneDuplicate.Size = new System.Drawing.Size(43, 23);
             this.btnToneDuplicate.TabIndex = 4;
             this.btnToneDuplicate.Text = "Dupl";
             this.toolTip.SetToolTip(this.btnToneDuplicate, "Duplicate selected tone");
@@ -992,18 +1004,6 @@
             this.btnDevUse.UseVisualStyleBackColor = false;
             this.btnDevUse.Visible = false;
             this.btnDevUse.Click += new System.EventHandler(this.btnDevUse_Click);
-            // 
-            // btnToneProfile
-            // 
-            this.btnToneProfile.ForeColor = System.Drawing.Color.IndianRed;
-            this.btnToneProfile.Location = new System.Drawing.Point(416, 96);
-            this.btnToneProfile.Name = "btnToneProfile";
-            this.btnToneProfile.Size = new System.Drawing.Size(58, 23);
-            this.btnToneProfile.TabIndex = 7;
-            this.btnToneProfile.Text = "Profile";
-            this.toolTip.SetToolTip(this.btnToneProfile, "Import tone from profile");
-            this.btnToneProfile.UseVisualStyleBackColor = true;
-            this.btnToneProfile.Click += new System.EventHandler(this.btnToneProfile_Click);
             // 
             // DLCPackageCreator
             // 
