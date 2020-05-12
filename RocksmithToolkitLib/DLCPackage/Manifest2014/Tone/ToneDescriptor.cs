@@ -39,19 +39,17 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Tone
             new ToneDescriptor { Name = "Tremolo", ShortName = "trem", Descriptor = "$[35727]TREMOLO" },
             new ToneDescriptor { Name = "Vibrato", ShortName = "vib", Descriptor = "$[35728]VIBRATO" },
 
-            new ToneDescriptor { Name = "* Vocal", ShortName = "vocal", Descriptor = "$[35718]VOCAL" },
             new ToneDescriptor { Name = "* Direct", ShortName = "direct", Descriptor = "$[35752]DIRECT" },
             new ToneDescriptor { Name = "* Effect", ShortName = "effect", Descriptor = "$[35733]EFFECT" },
+            new ToneDescriptor { Name = "* Vocal", ShortName = "vocal", Descriptor = "$[35718]VOCAL" },
+
             new ToneDescriptor { Name = "** Crunch", ShortName = "crunch", Descriptor = "$[27156]CRUNCH" },
-
-            new ToneDescriptor { Name = "** Slap Bass", ShortName = "slap", Descriptor = "$[27151]SLAP_BASS" },
-
             new ToneDescriptor { Name = "** Emulated", ShortName = "emu", Descriptor = "$[27119]EMULATED" },
-
+            new ToneDescriptor { Name = "** Slap Bass", ShortName = "slap", Descriptor = "$[27151]SLAP_BASS" },
             new ToneDescriptor { Name = "** Banjo", ShortName = "banjo", Descriptor = "$[27201]BANJO" },
             new ToneDescriptor { Name = "** Mandolin", ShortName = "mandolin", Descriptor = "$[27202]MANDOLIN" },
-            new ToneDescriptor { Name = "** Ukulele", ShortName = "uke", Descriptor = "$[27204]UKULELE" },
-            new ToneDescriptor { Name = "** Piano", ShortName = "piano", Descriptor = "$[29495]PIANO" }
+            new ToneDescriptor { Name = "** Piano", ShortName = "piano", Descriptor = "$[29495]PIANO" },
+            new ToneDescriptor { Name = "** Ukulele", ShortName = "uke", Descriptor = "$[27204]UKULELE" }
         };
     }
 }
