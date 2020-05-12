@@ -125,7 +125,7 @@ namespace RocksmithToolkitLib.Extensions
 
         public static string GetValidToneName(this string value)
         {
-            Regex rgx = new Regex("[^a-zA-Z0-9_]");
+            Regex rgx = new Regex("[^a-zA-Z0-9_ ]");
             return rgx.Replace(value, "");
         }
 
