@@ -409,7 +409,7 @@ namespace RocksmithToolkitLib.Conversion
             {
                 var bendValues = new List<BendValue>();
                 // CRITICAL CALCULATION - DO NOT CHANGE - MULTIPLIER VALUE MUST BE 0.3333 TO ACHEIVE PROPER ACCURACY AND MATCH EOF OUTPUT
-                bendValues.Add(new BendValue { Step = songNote.Bend, Time = (float)Math.Round((songNote.Sustain * 0.3333 / songNote.Bend) + songNote.Time, 3), Unk5 = 0 });
+                bendValues.Add(new BendValue { Step = songNote.Bend, Time = (float)Math.Round((songNote.Sustain * 0.3333 / songNote.Bend) + songNote.Time, 3) });
                 songNote2014.BendValues = bendValues.ToArray();
             }
 

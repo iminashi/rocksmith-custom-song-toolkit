@@ -198,7 +198,7 @@ namespace RocksmithToolkitLib.XML
 
         public Song2014(Sng2014HSL.Sng sngData, Attributes2014 attr = null)
         {
-            Version = "7";
+            Version = "8";
             CrowdSpeed = "1";
 
             if (attr != null)
@@ -1224,13 +1224,11 @@ namespace RocksmithToolkitLib.XML
         [XmlAttribute("step")]
         public float Step { get; set; }
 
-        [XmlAttribute("unk5")]
-        public Byte Unk5 { get; set; }
-
         internal static BendValue[] Parse(Sng2014HSL.BendData32[] bendData)
         {
-            var bendValues = (bendData.Where(t => t.Time > 0 && t.Step >= 0)
-                .Select(t => new BendValue { Time = t.Time, Step = t.Step, Unk5 = t.Unk5 })).ToArray();
+            var bendValues = bendData
+                .Where(t => t.Time > 0 && t.Step >= 0)
+                .Select(t => new BendValue { Time = t.Time, Step = t.Step }).ToArray();
 
             return (bendValues.Length > 0) ? bendValues : null;
         }
@@ -1266,7 +1264,7 @@ namespace RocksmithToolkitLib.XML
         [XmlAttribute("hopo")]
         public Int32 Hopo { get; set; }
 
-        private string _strum = "1";
+        private string _strum = "down";
         [XmlAttribute("strum")]
         public string Strum
         {
@@ -1283,31 +1281,35 @@ namespace RocksmithToolkitLib.XML
 
             for (var i = 0; i < notesSection.Count; i++)
             {
-                if (notesSection.Notes[i].ChordId == -1)
-                    continue; //Skip single notes (get only chord notes)
+                var sngNote = notesSection.Notes[i];
+                if (sngNote.ChordId == -1)
+                    continue; //Skip single notes (get only chords)
 
-                var chord = new SongChord2014();
-                chord.ChordId = notesSection.Notes[i].ChordId;
-                chord.Time = notesSection.Notes[i].Time;
-                // Console.WriteLine("Song2014 chord.ChordId = " + chord.ChordId);
-
-                // TODO: make changes here to fix 'strum =' issue
+                var chord = new SongChord2014
+                {
+                    ChordId = sngNote.ChordId,
+                    Time = sngNote.Time
+                };
 
                 // TECHNIQUES
-                chord.parseChordMask(notesSection.Notes[i], notesSection.Notes[i].NoteMask);
+                chord.ParseChordMask(sngNote.NoteMask);
 
-                // CHORD NOTES (WITH TECHNIQUES)
-                var cnId = notesSection.Notes[i].ChordNotesId;
-                if (cnId != -1)
+                // CHORD NOTES
+                int cnId = sngNote.ChordNotesId;
+                if ((sngNote.NoteMask & CON.NOTE_MASK_STRUM) != 0)
                 {
-                    if (sngData.ChordNotes.ChordNotes.Length > cnId)
-                        chord.ParseChordNotes(sngData.Chords.Chords[chord.ChordId], sngData.ChordNotes.ChordNotes[cnId], notesSection.Notes[i].Sustain);
+                    Sng2014HSL.ChordNotes sngChordNotes = null;
+                    if(cnId != -1 && cnId < sngData.ChordNotes.ChordNotes.Length)
+                        sngChordNotes = sngData.ChordNotes.ChordNotes[cnId];
+
+                    chord.ParseChordNotes(sngData.Chords.Chords[chord.ChordId], sngChordNotes, sngNote.Sustain);
                 }
-                /*else if (chord.Strum == "up")
+                else
                 {
-                    // CHORD NOTES (WITHOUT TECHNIQUES) + NOT HIGH DENSITY
-                    chord.ParseChordNotes(sngData.Chords.Chords[chord.ChordId]);
-                }*/
+                    // Every chord that has chord notes should also have STRUM. 
+                    // This seems to be the case for official files. For CDLC this does not apply.
+                    //Debug.Assert(cnId == -1);
+                }
 
                 chords.Add(chord);
             }
@@ -1315,17 +1317,15 @@ namespace RocksmithToolkitLib.XML
             return chords.ToArray();
         }
 
-        private void ParseChordNotes(Sng2014HSL.Chord template, Sng2014HSL.ChordNotes chordNotes = null, float chordSustain = 0f)
+        private void ParseChordNotes(Sng2014HSL.Chord template, Sng2014HSL.ChordNotes chordNotes, float chordSustain)
         {
             var notes = new List<SongNote2014>();
             const sbyte notSetup = unchecked((sbyte)-1);
 
             for (var i = 0; i < 6; i++)
             {
-                if ((chordNotes != null && chordNotes.NoteMask[i] != 0) || //notes with techniques
-                    (chordNotes == null && template.Frets[i] != 255))
-                { // Notes without techniques
-
+                if (template.Frets[i] != 255)
+                {
                     var cnote = new SongNote2014();
 
                     // SETUP DEFAULT VALUES
@@ -1337,7 +1337,7 @@ namespace RocksmithToolkitLib.XML
                     cnote.Slap = notSetup;
                     cnote.Pluck = notSetup;
 
-                    if ((chordNotes != null && chordNotes.NoteMask[i] != 0))
+                    if (chordNotes != null && chordNotes.NoteMask[i] != 0)
                     {
                         // SETUP FROM OWN PROPERTIES
                         cnote.parseNoteMask(chordNotes.NoteMask[i]);
@@ -1366,7 +1366,7 @@ namespace RocksmithToolkitLib.XML
             this.ChordNotes = notes.ToArray();
         }
 
-        private void parseChordMask(Sng2014HSL.Notes notes, uint p)
+        private void ParseChordMask(uint p)
         {
             // Remove flags from know techniques
             if ((p & CON.NOTE_MASK_CHORD) != 0)
@@ -1379,15 +1379,6 @@ namespace RocksmithToolkitLib.XML
                 p &= ~CON.NOTE_MASK_DOUBLESTOP;
             if ((p & CON.NOTE_MASK_ARPEGGIO) != 0)
                 p &= ~CON.NOTE_MASK_ARPEGGIO;
-
-            // TODO: make changes to fix inacurrate 'strum ='
-
-            this.Strum = "down";
-            if ((p & CON.NOTE_MASK_STRUM) != 0)
-            {
-                p &= ~CON.NOTE_MASK_STRUM;
-                this.Strum = "up"; //TODO: Wrong, need research about it later
-            }
 
             if (p == 0)
                 return;

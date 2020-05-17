@@ -773,11 +773,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
         {
             n.NoteMask |= CON.NOTE_MASK_CHORD;
             if (chordNotesId != -1)
-            {
-                // there should always be a STRUM too => handshape at chord time
-                // probably even for chordNotes which are not exported to SNG
                 n.NoteMask |= CON.NOTE_MASK_CHORDNOTES;
-            }
 
             if (chord.LinkNext != 0)
                 n.NoteMask |= CON.NOTE_MASK_PARENT;
@@ -879,9 +875,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
                 // these are always zero for lessons and songs
                 //"Unk3_0",
                 //"Unk4_0",
-                // TODO unknown meaning, added attribute to XML for testing
-                //"Unk5"
-                b.Unk5 = note.BendValues[i].Unk5;
+                //"Unk5" garbage
             }
 
             return bd;
@@ -1017,7 +1011,12 @@ namespace RocksmithToolkitLib.Sng2014HSL
                     var cn = new Notes();
                     Int32 id = -1;
                     if (chord.ChordNotes != null && chord.ChordNotes.Length > 0)
+                    {
                         id = addChordNotes(sng, chord);
+                        // If the XML file version is 8, chords that have chord notes = chords that should have STRUM
+                        if (xml.Version == "8")
+                            cn.NoteMask |= CON.NOTE_MASK_STRUM;
+                    }
                     parseChord(xml, sng, chord, cn, id);
                     notes.Add(cn);
 
@@ -1067,9 +1066,10 @@ namespace RocksmithToolkitLib.Sng2014HSL
                             if (n.FingerPrintId[0] == -1)
                                 n.FingerPrintId[0] = id;
 
+                            // For XML versions older than 8
                             // Add STRUM to first chord in the handshape (The chord will be rendered as a full chord panel)
                             // In later DLC, frethand muted chords that start a handshape may not have STRUM
-                            if (n.ChordId != -1)
+                            if (n.ChordId != -1 && xml.Version != "8")
                             {
                                 // There may be single notes before the first chord so can't use fp1[id].StartTime == n.Time
                                 if (!chordInHandshape.ContainsKey(id))
@@ -1108,7 +1108,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
                             n.FingerPrintId[1] = id;
 
                             // Add STRUM to first chord in the arpeggio handshape
-                            if (n.ChordId != -1)
+                            if (n.ChordId != -1 && xml.Version != "8")
                             {
                                 if (!chordInArpeggio.ContainsKey(id))
                                 {
