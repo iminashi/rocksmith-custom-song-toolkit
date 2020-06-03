@@ -137,45 +137,30 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Tone
 
         private static List<Tone2014> ReadFromProfile(string profilePath)
         {
-            List<Tone2014> tones = new List<Tone2014>();
             try
             {
+                var serializer = new JsonSerializer();
+
                 using (var input = File.OpenRead(profilePath))
                 using (var outMS = new MemoryStream())
                 using (var br = new StreamReader(outMS))
+                using (var reader = new JsonTextReader(br))
                 {
                     RijndaelEncryptor.DecryptProfile(input, outMS);
-                    string toneArrayJson = string.Empty;
 
-                    while (!br.EndOfStream)
+                    while (reader.Read())
                     {
-                        string read = br.ReadLine();
-                        if (read.StartsWith("\"CustomTones"))
-                        {
-                            var sb = new StringBuilder("{");
-                            do
-                            {
-                                sb.Append(read);
-                                read = br.ReadLine();
-                            }
-                            while (!read.Contains("]"));
-                            sb.Append("]}");
-
-                            toneArrayJson = sb.ToString();
-                            break;
-                        }
+                        if (reader.TokenType == JsonToken.StartArray && reader.Path == "CustomTones")
+                            return serializer.Deserialize<List<Tone2014>>(reader);
                     }
-
-                    JToken token = JObject.Parse(toneArrayJson);
-                    foreach (var toon in token.SelectToken("CustomTones"))
-                        tones.Add(toon.ToObject<Tone2014>());
                 }
             }
             catch
             {
                 throw new NotSupportedException("Unknown file format exception. File not supported.");
             }
-            return tones;
+
+            return new List<Tone2014>();
         }
 
         private static List<Tone2014> ReadFromPackage(string packagePath, Platform platform)
