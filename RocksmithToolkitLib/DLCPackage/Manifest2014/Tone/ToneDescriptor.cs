@@ -13,6 +13,22 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Tone
             return Name;
         }
 
+        public static ToneDescriptor GetMatchingOrDefault(Tone2014 tone)
+        {
+            ToneDescriptor descriptor = AllDescriptors[3];
+
+            foreach (var td in AllDescriptors)
+            {
+                if (tone.Name.Contains(td.ShortName))
+                {
+                    descriptor = td;
+                    break;
+                }
+            }
+
+            return descriptor;
+        }
+
         public static List<ToneDescriptor> AllDescriptors { get; } = new List<ToneDescriptor>
         {
             new ToneDescriptor { Name = "Acoustic", ShortName = "acoustic", Descriptor = "$[35721]ACOUSTIC" },

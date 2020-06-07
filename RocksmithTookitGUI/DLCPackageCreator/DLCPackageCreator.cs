@@ -1430,7 +1430,11 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                             if (importForm.ShowDialog() == DialogResult.OK)
                             {
                                 foreach (var tone in importForm.Tone2014.Where(t => !t.GearList.IsNull()))
+                                {
+                                    if (tone.ToneDescriptors.Count == 0)
+                                        tone.ToneDescriptors.Add(ToneDescriptor.GetMatchingOrDefault(tone).Descriptor);
                                     lstTones.Items.Add(tone);
+                                }
                             }
                         }
                     else if (tones2014.Count == 1 && !tones2014[0].GearList.IsNull())
