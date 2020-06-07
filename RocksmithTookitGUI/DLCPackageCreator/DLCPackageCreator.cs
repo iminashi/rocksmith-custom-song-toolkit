@@ -1433,8 +1433,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                                     lstTones.Items.Add(tone);
                             }
                         }
-                    else if (tones2014.Count < 2)
-                        lstTones.Items.Add(tones2014.FirstOrDefault(t => !t.GearList.IsNull()));
+                    else if (tones2014.Count == 1 && !tones2014[0].GearList.IsNull())
+                        lstTones.Items.Add(tones2014[0]);
                 }
                 else
                 {
@@ -1451,8 +1451,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                                     lstTones.Items.Add(tone);
                             }
                         }
-                    else if (tones.Count < 2)
-                        lstTones.Items.Add(tones.FirstOrDefault(t => t.PedalList.Count != 0));
+                    else if (tones.Count == 1 && tones[0].PedalList.Count != 0)
+                        lstTones.Items.Add(tones[0]);
                 }
             }
             catch (Exception ex)
