@@ -267,8 +267,11 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 if (String.IsNullOrEmpty(packageComment))
                     return tkiComment;
 
-                if (!packageComment.Contains("Remastered") || !packageComment.Contains("RS1"))
+                if ((CurrentGameVersion == GameVersion.RS2014 && !packageComment.Contains("Remastered"))
+                    || (CurrentGameVersion == GameVersion.RS2012 && !packageComment.Contains("RS1")))
+                {
                     return packageComment + " " + tkiComment;
+                }
 
                 return packageComment;
             }
