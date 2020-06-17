@@ -1708,7 +1708,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             PackageGenerate();
         }
 
-        private void PackageGenerate_SFD()
+        private bool PackageGenerate_SFD()
         {
             using (var sfd = new SaveFileDialog())
             {
@@ -1732,10 +1732,12 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 sfd.Filter = CurrentRocksmithTitle + " CDLC (*.*)|*.*";
 
                 if (sfd.ShowDialog(this) != DialogResult.OK) // 'this' ensures sfd is topmost
-                    return;
+                    return false;
 
                 DestPath = sfd.FileName;
             }
+
+            return true;
         }
 
         public DLCPackageData PackageGenerate()
@@ -1856,8 +1858,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             }
 
             // open PackageGenerate save file dialog
-            if (!GlobalsLib.IsUnitTest)
-                PackageGenerate_SFD();
+            if (!GlobalsLib.IsUnitTest && !PackageGenerate_SFD())
+                return null;
 
             // fire up a fake progress bar to show app is alive and well
             var step = (int)Math.Round(1.0 / playableArrCount * 100, 3);
