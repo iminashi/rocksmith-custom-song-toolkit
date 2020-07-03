@@ -201,9 +201,9 @@ namespace RocksmithToolkitLib.DLCPackage
                         Attributes2014 att = null;
                         // Some ODLC json files contain factory errors
                         // Confirmed error in Chords (too many chords are reported in some difficulty levels)
-                        var jsonFiles = Directory.EnumerateFiles(unpackedDir, String.Format("{0}.json", Path.GetFileNameWithoutExtension(sngFile)), SearchOption.AllDirectories).FirstOrDefault();
-                        if (!String.IsNullOrEmpty(jsonFiles) && jsonFiles.Any())
-                            att = Manifest2014<Attributes2014>.LoadFromFile(jsonFiles).Entries.ToArray()[0].Value.ToArray()[0].Value;
+                        string jsonFile = Directory.EnumerateFiles(unpackedDir, String.Format("{0}.json", Path.GetFileNameWithoutExtension(sngFile)), SearchOption.AllDirectories).FirstOrDefault();
+                        if (!String.IsNullOrEmpty(jsonFile))
+                            att = Manifest2014<Attributes2014>.LoadFromFile(jsonFile).Entries.ToArray()[0].Value.ToArray()[0].Value;
 
                         // create the xml file from sng file
                         var sngContent = Sng2014File.LoadFromFile(sngFile, srcPlatform);
@@ -220,8 +220,8 @@ namespace RocksmithToolkitLib.DLCPackage
                                 {
                                     var sngFileName = Path.GetFileNameWithoutExtension(sngFile);
                                     var vocalType = sngFileName.IndexOf("jvocals", StringComparison.OrdinalIgnoreCase) >= 0 ? "jvocals" : "vocals";
-                                    var dlcName = att.DLCKey.ToLower();
-                                    var glyphsPath = Path.Combine(Path.GetDirectoryName(xmlSngFile), String.Format("lyrics_{0}_{1}.glyphs.xml", dlcName, vocalType));
+                                    var dlcName = att.SongKey.ToLower();
+                                    var glyphsPath = Path.Combine(Path.GetDirectoryName(xmlSngFile), String.Format("{0}_{1}.glyphs.xml", dlcName, vocalType));
                                     var glyphDefs = GlyphDefinitions.LoadFromSng(sngContent);
                                     glyphDefs.Serialize(glyphsPath);
                                 }
