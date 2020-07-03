@@ -391,16 +391,14 @@ namespace RocksmithToolkitLib.Ogg
             using (var inputFileStream = File.Open(inputFile, FileMode.Open))
             {
                 return inputFileStream.GetAudioPlatform();
-            };
+            }
         }
 
         public static Platform GetAudioPlatform(this Stream input)
         {
-            using (var MS = new MemoryStream())
-            using (var reader = new BinaryReader(MS))
+            input.Position = 0;
+            using (var reader = new BinaryReader(input))
             {
-                input.Position = 0; input.CopyTo(MS);
-                MS.Position = 0; input.Position = 0;
                 var fileID = new string(reader.ReadChars(4));
                 if (fileID == "RIFF")//LE
                     return new Platform(GamePlatform.Pc, GameVersion.None);
@@ -423,11 +421,9 @@ namespace RocksmithToolkitLib.Ogg
             var platform = input.GetAudioPlatform();
             var bitConverter = platform.GetBitConverter;
 
-            using (var MS = new MemoryStream())
-            using (var reader = new EndianBinaryReader(bitConverter, MS))
+            input.Position = 0;
+            using (var reader = new EndianBinaryReader(bitConverter, input))
             {
-                input.Position = 0; input.CopyTo(MS);
-                MS.Position = 0; input.Position = 0;
                 reader.Seek(16, SeekOrigin.Begin);
                 if (reader.ReadUInt32() == 24)//fmtSize
                     return true;
