@@ -544,6 +544,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         // MANIFEST
                         var manifest = new Manifest2014<Attributes2014>();
                         var attribute = new Attributes2014(arrangementFileName, arr, info, platform);
+                        attribute.SongPartition = songPartitionCount.GetSongPartition(arr.ArrangementName, arr.ArrangementType);
 
                         // TODO: monitor this change
                         // Commented out - EOF now properly sets the bonus/represent elements
@@ -553,8 +554,6 @@ namespace RocksmithToolkitLib.DLCPackage
                         //    // represent is set to "1" by default, if there is a bonus then set represent to "0"
                         //    attribute.Representative = arrangement.BonusArr ? 0 : 1;
                         //    attribute.ArrangementProperties.Represent = arrangement.BonusArr ? 0 : 1;
-
-                        //    attribute.SongPartition = songPartitionCount.GetSongPartition(arrangement.Name, arrangement.ArrangementType);
                         //    if (attribute.SongPartition > 1 && !arrangement.BonusArr)
                         //    {
                         //        // for alternate arrangement then both represent and bonus are set to "0"
@@ -572,7 +571,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
                         const string jsonPathPC = "manifests/songs_dlc_{0}/{0}_{1}.json";
                         const string jsonPathConsole = "manifests/songs_dlc/{0}_{1}.json";
-                        packPsarc.AddEntry(String.Format((platform.IsConsole ? jsonPathConsole : jsonPathPC), dlcName, arrangementFileName), manifestStream);
+                        packPsarc.AddEntry(String.Format(platform.IsConsole ? jsonPathConsole : jsonPathPC, dlcName, arrangementFileName), manifestStream);
 
                         // MANIFEST HEADER
                         var attributeHeaderDictionary = new Dictionary<string, AttributesHeader2014> { { "Attributes", new AttributesHeader2014(attribute) } };
